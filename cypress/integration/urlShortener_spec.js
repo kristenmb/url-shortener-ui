@@ -1,10 +1,9 @@
-describe('URL Shortener', () => {
+describe('URL Shortener - on page load', () => {
 
   const baseUrl = 'http://localhost:3000'
 
   before(() => {
-    cy
-    .fixture('mockData.json')
+    cy.fixture('mockData.json')
     .then((mockUrls) => {
       cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
         statusCode: 200,
@@ -36,4 +35,30 @@ describe('URL Shortener', () => {
       .type('test input')
     cy.get('form input').eq(1).should('have.attr', 'value', 'test input')
   })
+})
+
+describe('URL Shortener - add new URL', () => {
+
+  const baseUrl = 'http://localhost:3000'
+
+  before(() => {
+    cy.fixture('mockData.json')
+      .then((mockUrls) => {
+        cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
+          statusCode: 200,
+          body: mockUrls
+        })
+    })
+    
+    cy.fixture('mockDataAfterPost.json')
+      .then((mockPost) => {
+        cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
+          statusCode: 200,
+          body: mockPost
+        })
+      })
+
+    cy.visit(baseUrl)
+  })
+
 })
