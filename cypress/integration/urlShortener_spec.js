@@ -13,9 +13,20 @@ describe('URL Shortener', () => {
     })
     
     cy.visit(baseUrl)
-  });
+  })
 
-  it ('Should show a loading status while fetching movie info', () => {
-    cy.get('.App').should('be.visible')
-  });
-});
+  it ('Should be able to view the page title and the existing shortened URLs', () => {
+    cy.get('.App').find('h1').should('contain', 'URL Shortener')
+      .get('.App').find('.url').should('have.length', 1)
+      .get('.App').find('.url').eq(0).find('h3').should('contain', 'Awesome photo of a bridge')
+      .get('.App').find('.url').eq(0).find('a').should('contain', 'http://localhost:3001/useshorturl/1')
+  })
+
+  it ('Should be able to view the Form with the proper inputs', () => {
+
+  })
+
+  it ('Should be able to see what user has typed into the form inputs', () => {
+    
+  })
+})
