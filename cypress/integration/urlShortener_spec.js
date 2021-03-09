@@ -28,6 +28,12 @@ describe('URL Shortener', () => {
   })
 
   it ('Should be able to see what user has typed into the form inputs', () => {
-    
+    cy.get('form').find('input[type=text]').eq(0)
+      .type('Bumble Bee Bums')
+    cy.get('form input').eq(0).should('have.attr', 'value', 'Bumble Bee Bums')
+
+    cy.get('form').find('input[type=text]').eq(1)
+      .type('test input')
+    cy.get('form input').eq(1).should('have.attr', 'value', 'test input')
   })
 })
