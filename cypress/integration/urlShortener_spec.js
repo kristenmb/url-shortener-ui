@@ -93,3 +93,38 @@ describe('URL Shortener - Error Handling on page load', () => {
     cy.get('.App').find('p').should('contain', 'Cannot retrieve your shortened urls, please try again later.')
   })
 })
+
+describe('URL Shortener - Error Handling on bad post response', () => {
+
+  const baseUrl = 'http://localhost:3000'
+
+  before(() => {
+    cy.fixture('mockData.json')
+    .then((mockUrls) => {
+      cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
+        statusCode: 200,
+        body: mockUrls
+      })
+    })
+
+    cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
+      statusCode: 404
+    })
+
+    cy.visit(baseUrl)
+  })
+
+  it ('Should see an error message after trying to submit a new url', () => {
+    cy.get('form').find('input[type=text]').eq(0)
+      .type('test title')
+
+    cy.get('form').find('input[type=text]').eq(1)
+      .type('test input')
+    
+    cy.get('form button').click()
+    
+    cy.get('.App').find('p').should('contain', 'Url shortening unsuccessful, please try again.')
+  })
+})
+
+
