@@ -21,7 +21,7 @@ export class App extends Component {
 
   submitNewUrl = (submission) => {
     addUrl(submission)
-      .then(response => getUrls())
+      .then(response => this.setState({ urls: [...this.state.urls, response ]}))
       .catch(error => this.setState({ error: "Url shortening unsuccessful, please try again." }))
   }
 
