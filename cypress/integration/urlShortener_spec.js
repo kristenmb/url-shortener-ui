@@ -127,4 +127,49 @@ describe('URL Shortener - Error Handling on bad post response', () => {
   })
 })
 
+describe.only('URL Shortener - Error Handling on incomplete inputs', () => {
 
+  const baseUrl = 'http://localhost:3000'
+
+  before(() => {
+    cy.fixture('mockData.json')
+    .then((mockUrls) => {
+      cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
+        statusCode: 200,
+        body: mockUrls
+      })
+    })
+
+    cy.visit(baseUrl)
+  })
+
+  it ('Should see an error message after trying to submit the form without completing both fields', () => {
+    cy.get('form').find('input[type=text]').eq(0)
+      .type('test title')
+    
+    cy.get('form button').click()
+    
+    cy.get('.App').find('p').should('contain', 'Please include a title and url to your submission')
+  })
+
+  it ('Should remove error message and be able to submit after user starts typing in input', () => {
+     cy.get('form').find('input[type=text]').eq(0)
+      .type('test title')
+    
+    cy.get('form button').click()
+
+     cy.get('form').find('input[type=text]').eq(1)
+      .type('test url')
+
+      cy.fixture('mockDataAfterPost.json')
+      .then((mockPost) => {
+        cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
+          statusCode: 200,
+          body: mockPost
+        })
+      })
+
+    cy.get('form button').click()
+
+  })
+})
