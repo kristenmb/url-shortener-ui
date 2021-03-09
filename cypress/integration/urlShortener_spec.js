@@ -23,7 +23,8 @@ describe('URL Shortener', () => {
   })
 
   it ('Should be able to view the Form with the proper inputs', () => {
-
+    cy.get('form').find('input[type=text]').should('have.length', 2)
+      .get('form').find('button').should('contain', 'Shorten Please!')
   })
 
   it ('Should be able to see what user has typed into the form inputs', () => {
