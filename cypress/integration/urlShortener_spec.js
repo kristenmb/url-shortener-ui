@@ -76,3 +76,20 @@ describe('URL Shortener - add new URL', () => {
 
   })
 })
+
+describe('URL Shortener - Error Handling on page load', () => {
+
+  const baseUrl = 'http://localhost:3000'
+
+  before(() => {
+    cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
+      statusCode: 404
+    })
+
+    cy.visit(baseUrl)
+  })
+
+  it ('Should see an error message', () => {
+    cy.get('.App').find('p').should('contain', 'Cannot retrieve your shortened urls, please try again later.')
+  })
+})
