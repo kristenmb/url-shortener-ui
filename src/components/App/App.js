@@ -33,10 +33,9 @@ export class App extends Component {
 
   removeUrl = (event) => {
     const idNum = event.target.id
-    deleteUrl(idNum)
-      .then(response => this.setState({ urls: remainingUrls }))
     const remainingUrls = this.state.urls.filter(url => url.id !== idNum)
-    // this.setState({ urls: remainingUrls })
+    deleteUrl(idNum)
+    this.setState({ urls: remainingUrls })
   }
   
   render() {

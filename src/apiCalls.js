@@ -23,7 +23,8 @@ export const deleteUrl = (idNum) => {
     method: 'DELETE' 
   })
     .then(response => {
-      handleErrors(response)})
+      handleErrors(response)
+      return response})
 }
 
 const handleErrors = (res) => {
