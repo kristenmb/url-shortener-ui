@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls, addUrl } from '../../apiCalls';
+import { getUrls, addUrl, deleteUrl } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -31,6 +31,14 @@ export class App extends Component {
       .catch(error => this.setState({ error: "Url shortening unsuccessful, please try again." }))
   }
 
+  removeUrl = (event) => {
+    const idNum = event.target.id
+    deleteUrl(idNum)
+      .then(response => this.setState({ urls: remainingUrls }))
+    const remainingUrls = this.state.urls.filter(url => url.id !== idNum)
+    // this.setState({ urls: remainingUrls })
+  }
+  
   render() {
     return (
         <main className="App">

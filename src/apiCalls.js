@@ -18,6 +18,14 @@ export const addUrl = (submission) => {
       return response.json()})
 }
 
+export const deleteUrl = (idNum) => {
+  return fetch(`http://localhost:3001/api/v1/urls/${idNum}`, {
+    method: 'DELETE' 
+  })
+    .then(response => {
+      handleErrors(response)})
+}
+
 const handleErrors = (res) => {
   if (!res.ok) {
     throw new Error()
