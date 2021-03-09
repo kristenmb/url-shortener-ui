@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls } from '../../apiCalls';
+import { getUrls, addUrl } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -14,9 +14,15 @@ export class App extends Component {
   }
 
   componentDidMount() {
-    return getUrls()
+    getUrls()
       .then(urls => this.setState({ urls: urls.urls }))
-      .catch(error => this.setState({ error: error.message }))
+      .catch(error => this.setState({ error: "Cannot retrieve your shortened urls, please try again later." }))
+  }
+
+  submitNewUrl = (submission) => {
+    addUrl(submission)
+      .then(response => getUrls())
+      .catch(error => this.setState({ error: "Url shortening unsuccessful, please try again." }))
   }
 
   render() {
