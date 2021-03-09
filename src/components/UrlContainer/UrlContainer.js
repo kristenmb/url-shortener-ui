@@ -14,7 +14,7 @@ const UrlContainer = ({ urls, error }) => {
 
   return (
     <section>
-      {!error && urlEls.length && urlEls}
+      { !error && urlEls.length && urlEls }
       { !urlEls.length && !error && <p>No urls yet! Find some to shorten!</p> }
       { error && <p>{error}</p> }
     </section>

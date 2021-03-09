@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
 
 class UrlForm extends Component {
-  constructor(props) {
+  constructor({props}) {
     super(props);
     this.state = {
       title: '',
-      urlToShorten: ''
+      urlToShorten: '',
+      formError: ''
     };
   }
 
   handleNameChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value, formError: '' });
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    const newUrl = {
-      long_url: this.state.urlToShorten,
-      title: this.state.title
+    if (this.state.title && this.state.urlToShorten) {
+      const newUrl = {
+        long_url: this.state.urlToShorten,
+        title: this.state.title
+      }
+      this.props.submitNewUrl(newUrl)
+      this.clearInputs();
+    } else {
+      this.setState({ formError: 'Please include a title and url to your submission'})
     }
-   this.props.submitNewUrl(newUrl)
-    this.clearInputs();
   }
 
   clearInputs = () => {
@@ -49,6 +54,7 @@ class UrlForm extends Component {
         <button onClick={e => this.handleSubmit(e)}>
           Shorten Please!
         </button>
+        {this.state.formError && <p>{this.state.formError}</p>}
       </form>
     )
   }
