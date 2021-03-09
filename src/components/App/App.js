@@ -47,7 +47,11 @@ export class App extends Component {
             <UrlForm submitNewUrl={this.submitNewUrl}/>
           </header>
 
-          <UrlContainer urls={this.state.urls} error={this.state.error}/>
+          <UrlContainer
+            urls={this.state.urls}
+            error={this.state.error}
+            removeUrl={this.removeUrl}
+          />
         </main>
     );
   }
