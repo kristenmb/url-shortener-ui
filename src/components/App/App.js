@@ -14,8 +14,8 @@ export class App extends Component {
   }
 
   componentDidMount() {
-    getUrls()
-      .then(urls => this.setState({ urls: urls }))
+    return getUrls()
+      .then(urls => this.setState({ urls: urls.urls }))
       .catch(error => this.setState({ error: error.message }))
   }
 
