@@ -61,4 +61,18 @@ describe('URL Shortener - add new URL', () => {
     cy.visit(baseUrl)
   })
 
+  it ('Should be able to submit the form and see the new shortened URL', () => {
+    cy.get('form').find('input[type=text]').eq(0)
+      .type('Bumble Bee Bums')
+    cy.get('form input').eq(0).should('have.attr', 'value', 'Bumble Bee Bums')
+
+    cy.get('form').find('input[type=text]').eq(1)
+      .type('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reddit.com%2Fr%2Faww%2Fcomments%2Fhqhujs%2Fbehold_the_glory_of_bumblebee_butts%2F&psig=AOvVaw3vt_WBpzqvNzHGVub79PJB&ust=1615397393702000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCIjpwrDeo-8CFQAAAAAdAAAAABAD')
+    cy.get('form input').eq(1).should('have.attr', 'value', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reddit.com%2Fr%2Faww%2Fcomments%2Fhqhujs%2Fbehold_the_glory_of_bumblebee_butts%2F&psig=AOvVaw3vt_WBpzqvNzHGVub79PJB&ust=1615397393702000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCIjpwrDeo-8CFQAAAAAdAAAAABAD')
+  
+    cy.get('form button').click()
+
+    cy.get('.App').find('.url').should('have.length', 2)
+
+  })
 })
